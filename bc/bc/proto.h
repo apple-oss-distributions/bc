@@ -1,7 +1,7 @@
 /* proto.h: Prototype function definitions for "external" functions. */
 
 /*  This file is part of GNU bc.
-    Copyright (C) 1991, 1992, 1993, 1994, 1997 Free Software Foundation, Inc.
+    Copyright (C) 1991-1994, 1997, 2000 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,10 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; see the file COPYING.  If not, write to
-    the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+      The Free Software Foundation, Inc.
+      59 Temple Place, Suite 330
+      Boston, MA 02111 USA
 
     You may contact the author by:
-       e-mail:  phil@cs.wwu.edu
+       e-mail:  philnelson@acm.org
       us-mail:  Philip A. Nelson
                 Computer Science Department, 9062
                 Western Washington University
@@ -76,6 +78,7 @@ _PROTOTYPE(void init_gen, (void));
 _PROTOTYPE(void generate, (char *str));
 _PROTOTYPE(void run_code, (void));
 _PROTOTYPE(void out_char, (int ch));
+_PROTOTYPE(void out_schar, (int ch));
 _PROTOTYPE(id_rec *find_id, (id_rec *tree, char *id));
 _PROTOTYPE(int insert_id_rec, (id_rec **root, id_rec *new_id));
 _PROTOTYPE(void init_tree, (void));
@@ -84,6 +87,7 @@ _PROTOTYPE(char *bc_malloc, (int));
 _PROTOTYPE(void out_of_memory, (void));
 _PROTOTYPE(void welcome, (void));
 _PROTOTYPE(void warranty, (char *));
+_PROTOTYPE(void show_bc_version, (void));
 _PROTOTYPE(void limits, (void));
 _PROTOTYPE(void yyerror, (char *str ,...));
 _PROTOTYPE(void warn, (char *mesg ,...));
@@ -98,41 +102,9 @@ _PROTOTYPE(long long_val, (char **str));
 _PROTOTYPE(void load_code, (char *code));
 
 /* From main.c */
-_PROTOTYPE(int main, (int argc , char *argv []));
 _PROTOTYPE(int open_new_file, (void));
 _PROTOTYPE(void new_yy_file, (FILE *file));
 _PROTOTYPE(void use_quit, (int));
-
-/* From number.c */
-_PROTOTYPE(void free_num, (bc_num *num));
-_PROTOTYPE(bc_num new_num, (int length, int scale));
-_PROTOTYPE(void init_numbers, (void));
-_PROTOTYPE(bc_num copy_num, (bc_num num));
-_PROTOTYPE(void init_num, (bc_num *num));
-_PROTOTYPE(void str2num, (bc_num *num, char *str, int scale));
-_PROTOTYPE(char *num2str, (bc_num num));
-_PROTOTYPE(void int2num, (bc_num *num, int val));
-_PROTOTYPE(long num2long, (bc_num num));
-_PROTOTYPE(int bc_compare, (bc_num n1, bc_num n2));
-_PROTOTYPE(char is_zero, (bc_num num));
-_PROTOTYPE(char is_neg, (bc_num num));
-_PROTOTYPE(void bc_add, (bc_num n1, bc_num n2, bc_num *result, int scale_min));
-_PROTOTYPE(void bc_sub, (bc_num n1, bc_num n2, bc_num *result, int scale_min));
-_PROTOTYPE(void bc_multiply, (bc_num n1, bc_num n2, bc_num *prod, int scale));
-_PROTOTYPE(int bc_divide, (bc_num n1, bc_num n2, bc_num *quot, int scale));
-_PROTOTYPE(int bc_modulo,
-	    (bc_num num1, bc_num num2, bc_num *result, int scale));
-_PROTOTYPE(int bc_divmod,
-	    (bc_num num1, bc_num num2, bc_num *quot, bc_num *rem, int scale));
-_PROTOTYPE(int bc_raisemod,
-	    (bc_num base, bc_num expo, bc_num mod, bc_num *result, int scale));
-_PROTOTYPE(void bc_raise,
-		(bc_num num1, bc_num num2, bc_num *result, int scale));
-_PROTOTYPE(int bc_sqrt, (bc_num *num, int scale));
-_PROTOTYPE(void out_long, (long val, int size, int space,
-			   void (*out_char)(int)));
-_PROTOTYPE(void out_num, (bc_num num, int o_base, void (* out_char)(int)));
-
 
 /* From storage.c */
 _PROTOTYPE(void init_storage, (void));
@@ -164,6 +136,11 @@ _PROTOTYPE(void process_params, (program_counter *pc, int func ));
 /* For the scanner and parser.... */
 _PROTOTYPE(int yyparse, (void));
 _PROTOTYPE(int yylex, (void)); 
+
+#if defined(LIBEDIT)
+/* The *?*&^ prompt function */
+_PROTOTYPE(char *null_prompt, (EditLine *));
+#endif
 
 /* Other things... */
 #ifndef HAVE_UNISTD_H

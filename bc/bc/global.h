@@ -15,10 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; see the file COPYING.  If not, write to
-    the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+      The Free Software Foundation, Inc.
+      59 Temple Place, Suite 330
+      Boston, MA 02111 USA
 
     You may contact the author by:
-       e-mail:  phil@cs.wwu.edu
+       e-mail:  philnelson@acm.org
       us-mail:  Philip A. Nelson
                 Computer Science Department, 9062
                 Western Washington University
@@ -105,8 +107,15 @@ EXTERN fstack_rec *fn_stack;
 EXTERN int i_base;
 EXTERN int o_base;
 EXTERN int scale;
-#ifdef READLINE
+#if defined(READLINE) || defined(LIBEDIT)
 EXTERN int n_history;
+#endif
+
+#if defined(LIBEDIT)
+/* LIBEDIT data */
+EditLine *edit;
+History  *hist;
+HistEvent histev;
 #endif
 
 /* "Condition code" -- false (0) or true (1) */
@@ -138,10 +147,8 @@ EXTERN int next_var;
 
 EXTERN id_rec *name_tree;
 
-/* defined in number.c */
-extern bc_num _zero_;
-extern bc_num _one_;
-
 /* For use with getopt.  Do not declare them here.*/
 extern int optind;
 
+/* Access to the yy input file.  Defined in scan.c. */
+extern FILE *yyin;

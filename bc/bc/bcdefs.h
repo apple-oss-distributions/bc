@@ -15,10 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; see the file COPYING.  If not, write to
-    the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+      The Free Software Foundation, Inc.
+      59 Temple Place, Suite 330
+      Boston, MA 02111 USA
 
     You may contact the author by:
-       e-mail:  phil@cs.wwu.edu
+       e-mail:  philnelson@acm.org
       us-mail:  Philip A. Nelson
                 Computer Science Department, 9062
                 Western Washington University
@@ -42,10 +44,18 @@
 #include <limits.h>
 #endif
 
+#if defined(LIBEDIT)
+#include <histedit.h>
+#endif
+
+#if defined(READLINE)
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
+
 /* Include the other definitions. */
 #include "const.h"
 #include "number.h"
-
 
 /* These definitions define all the structures used in
    code and data storage.  This includes the representation of
@@ -80,8 +90,9 @@ typedef struct arg_list
 typedef struct 
     {
       char f_defined;   /* Is this function defined yet. */
-      char *f_body[BC_MAX_SEGS];
-      int   f_code_size;
+      char *f_body;
+      int  f_body_size;  /* Size of body.  Power of 2. */
+      int  f_code_size;
       bc_label_group *f_label;
       arg_list *f_params;
       arg_list *f_autos;
@@ -164,3 +175,14 @@ typedef struct file_node {
 	struct file_node *next;
 } file_node;
 
+/* Macro Definitions */
+
+#if defined(LIBEDIT)
+#define HISTORY_SIZE(n) history(hist, &histev, H_SETSIZE, n)
+#define UNLIMIT_HISTORY history(hist, &histev, H_SETSIZE, INT_MAX)
+#endif
+
+#if defined(READLINE)
+#define HISTORY_SIZE(n) stifle_history(n)
+#define UNLIMIT_HISTORY unstifle_history()
+#endif

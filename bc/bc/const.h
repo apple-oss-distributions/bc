@@ -15,10 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program; see the file COPYING.  If not, write to
-    the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+      The Free Software Foundation, Inc.
+      59 Temple Place, Suite 330
+      Boston, MA 02111 USA
 
     You may contact the author by:
-       e-mail:  phil@cs.wwu.edu
+       e-mail:  philnelson@acm.org
       us-mail:  Philip A. Nelson
                 Computer Science Department, 9062
                 Western Washington University
@@ -67,9 +69,7 @@
 
 #define BC_LABEL_GROUP 64
 #define BC_LABEL_LOG    6
-#define BC_MAX_SEGS    16    /* Code segments. */
-#define BC_SEG_SIZE  1024
-#define BC_SEG_LOG     10
+#define BC_START_SIZE  1024	/* Initial code body size. */
 
 /* Maximum number of variables, arrays and functions and the
    allocation increment for the dynamic arrays. */
@@ -96,6 +96,3 @@
 #define CONST
 #define VOID
 #endif
-
-/* Include the version definition. */
-#include "version.h"
